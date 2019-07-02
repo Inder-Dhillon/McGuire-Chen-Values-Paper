@@ -34,19 +34,19 @@ if mode == "m" or mode =="cm":
     if z>=57 and z <= 59:
         toggle_mcg = mcg_57_to_59
     elif z>=60 and z <= 69:
-        toggle_mcg = mcg_57_to_59
+        toggle_mcg = mcg_60_to_69
     elif z>=70 and z <= 73:
-        toggle_mcg = mcg_57_to_59
+        toggle_mcg = mcg_70_to_73
     elif z>=74 and z <= 76:
-        toggle_mcg = mcg_57_to_59
+        toggle_mcg = mcg_74_to_76
     elif z>=77 and z <= 90:
-        toggle_mcg = mcg_57_to_59
+        toggle_mcg = mcg_77_to_90
     else:
         raise Exception("Atomic number not in supported range.")
     print("****McG Values****")
     for i in range(-2, 3):
         toggle_mcg["a" + str(i)] = toggle_mcg["a" + str(i)] * (z ** i)
-    print(np.exp(toggle_mcg.sum(axis=1)))
+    print(np.exp(toggle_mcg.sum(axis=1)).round(5))
 
 if mode == "c" or mode =="cm" :
     if z >= 67 and z <= 69:
@@ -64,4 +64,4 @@ if mode == "c" or mode =="cm" :
     print("****Chen Values****")
     for i in range(-2, 3):
         toggle_chen["a" + str(i)] = toggle_chen["a" + str(i)] * (z ** i)
-    print(np.exp(toggle_chen.sum(axis=1)))
+    print(np.exp(toggle_chen.sum(axis=1)).round(5))
