@@ -65,7 +65,7 @@ def computation(event):
 root = Tk()
 root.title("Values")
 root.geometry("600x800")
-radio_switch = StringVar()
+radio_switch = StringVar(None, "cm")
 root["bg"] = "white"
 Label(root, text="Element:", font="Roboto", bg="white").pack(pady=7)
 element = Entry(root, justify=CENTER, bg="#dcdcdc", width=80, borderwidth=0)
@@ -74,17 +74,17 @@ Radiobutton(root,
               text="Chen Values",
               padx = 20,
               variable=radio_switch,
-              value="c").pack()
+              value="c", bg="white").pack()
 Radiobutton(root,
               text="McGuire Values",
               padx = 20,
               variable=radio_switch,
-              value="m").pack()
+              value="m", bg="white").pack()
 Radiobutton(root,
               text="Both Chen and McGuire Values",
               padx = 20,
               variable=radio_switch,
-              value="cm").pack()
+              value="cm", bg="white").pack()
 mcg_results = Label(root, text="", font=("Roboto", 13), bg="white")
 mcg_results.pack(padx=1)
 chen_results = Label(root, text="", font=("Roboto", 13), bg="white")
