@@ -10,7 +10,7 @@ root.geometry("600x800")
 result_list = ['w1', 'w2', 'w3', 'w4', 'w5', 'f12', 'f13', 'f14', 'f15', 'f23', 'f24', 'f25', 'f34', 'f35', 'f45']
 toggle_chen = None
 toggle_mcg = None
-mode = "cm"
+radio_switch = StringVar()
 
 #Importing Chen Values
 chen_67_to_69 = pd.read_csv('chcof1.csv')
@@ -38,6 +38,7 @@ mcg_77_to_90.index = result_list
 
 def computation(event):
     z = int(element.get())
+    mode = str(radio_switch.get())
     if mode == "m" or mode =="cm":
         if z>=57 and z <= 59:
             toggle_mcg = mcg_57_to_59
@@ -54,7 +55,6 @@ def computation(event):
         print("****McG Values****")
         for i in range(-2, 3):
             toggle_mcg["a" + str(i)] = toggle_mcg["a" + str(i)] * (z ** i)
-        mcg_results["text"]= (np.exp(toggle_mcg.sum(axis=1)).round(5))
 
     if mode == "c" or mode =="cm" :
         if z >= 67 and z <= 69:
@@ -72,13 +72,36 @@ def computation(event):
         print("****Chen Values****")
         for i in range(-2, 3):
             toggle_chen["a" + str(i)] = toggle_chen["a" + str(i)] * (z ** i)
-        chen_results["text"]=(np.exp(toggle_chen.sum(axis=1)).round(5))
+    if mode == "cm":
+        mcg_results["text"] = (np.exp(toggle_mcg.sum(axis=1)).round(5))
+        chen_results["text"] = (np.exp(toggle_chen.sum(axis=1)).round(5))
+    elif mode=="c":
+        chen_results["text"] = (np.exp(toggle_chen.sum(axis=1)).round(5))
+        mcg_results["text"] = ""
+    elif mode =="m":
+        mcg_results["text"] = (np.exp(toggle_mcg.sum(axis=1)).round(5))
+        chen_results["text"] = ""
 
 
 root["bg"] = "white"
 Label(root, text="Element:", font="Roboto", bg="white").pack(pady=7)
 element = Entry(root, justify=CENTER, bg="#dcdcdc", width=80, borderwidth=0)
 element.pack()
+Radiobutton(root,
+              text="Chen Values",
+              padx = 20,
+              variable=radio_switch,
+              value="c").pack()
+Radiobutton(root,
+              text="McGuire Values",
+              padx = 20,
+              variable=radio_switch,
+              value="m").pack()
+Radiobutton(root,
+              text="Both Chen and McGuire Values",
+              padx = 20,
+              variable=radio_switch,
+              value="cm").pack()
 mcg_results = Label(root, text="", font=("Roboto", 13), bg="white")
 mcg_results.pack(padx=1)
 chen_results = Label(root, text="", font=("Roboto", 13), bg="white")
