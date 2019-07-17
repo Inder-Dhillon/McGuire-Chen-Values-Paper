@@ -2,43 +2,23 @@ import pandas as pd
 import numpy as np
 from tkinter import *
 
-root = Tk()
-root.title("Values")
-root.geometry("600x800")
-
-
-result_list = ['w1', 'w2', 'w3', 'w4', 'w5', 'f12', 'f13', 'f14', 'f15', 'f23', 'f24', 'f25', 'f34', 'f35', 'f45']
-toggle_chen = None
-toggle_mcg = None
-radio_switch = StringVar()
-
-#Importing Chen Values
-chen_67_to_69 = pd.read_csv('chcof1.csv')
-chen_70_to_74 = pd.read_csv('chcof2.csv')
-chen_75_to_80 = pd.read_csv('chcof3.csv')
-chen_81_to_85 = pd.read_csv('chcof4.csv')
-chen_86_to_90 = pd.read_csv('chcof5.csv')
-chen_67_to_69.index = result_list
-chen_70_to_74.index = result_list
-chen_75_to_80.index = result_list
-chen_81_to_85.index = result_list
-chen_86_to_90.index = result_list
-#Importing McGuire Values
-mcg_57_to_59 = pd.read_csv('mgcof1.csv')
-mcg_60_to_69 = pd.read_csv('mgcof2.csv')
-mcg_70_to_73 = pd.read_csv('mgcof3.csv')
-mcg_74_to_76 = pd.read_csv('mgcof4.csv')
-mcg_77_to_90 = pd.read_csv('mgcof5.csv')
-mcg_57_to_59.index = result_list
-mcg_60_to_69.index = result_list
-mcg_70_to_73.index = result_list
-mcg_74_to_76.index = result_list
-mcg_77_to_90.index = result_list
-
-
 def computation(event):
+    toggle_chen = None
+    toggle_mcg = None
+    chen_67_to_69 = pd.read_csv('chcof1.csv',index_col=0)
+    chen_70_to_74 = pd.read_csv('chcof2.csv',index_col=0)
+    chen_75_to_80 = pd.read_csv('chcof3.csv',index_col=0)
+    chen_81_to_85 = pd.read_csv('chcof4.csv',index_col=0)
+    chen_86_to_90 = pd.read_csv('chcof5.csv',index_col=0)
+    # Importing McGuire Values
+    mcg_57_to_59 = pd.read_csv('mgcof1.csv',index_col=0)
+    mcg_60_to_69 = pd.read_csv('mgcof2.csv',index_col=0)
+    mcg_70_to_73 = pd.read_csv('mgcof3.csv',index_col=0)
+    mcg_74_to_76 = pd.read_csv('mgcof4.csv',index_col=0)
+    mcg_77_to_90 = pd.read_csv('mgcof5.csv',index_col=0)
     z = int(element.get())
     mode = str(radio_switch.get())
+
     if mode == "m" or mode =="cm":
         if z>=57 and z <= 59:
             toggle_mcg = mcg_57_to_59
@@ -82,7 +62,10 @@ def computation(event):
         mcg_results["text"] = (np.exp(toggle_mcg.sum(axis=1)).round(5))
         chen_results["text"] = ""
 
-
+root = Tk()
+root.title("Values")
+root.geometry("600x800")
+radio_switch = StringVar()
 root["bg"] = "white"
 Label(root, text="Element:", font="Roboto", bg="white").pack(pady=7)
 element = Entry(root, justify=CENTER, bg="#dcdcdc", width=80, borderwidth=0)
