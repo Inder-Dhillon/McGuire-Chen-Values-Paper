@@ -62,44 +62,49 @@ def computation(event=True):
 
     if mode == "cm":
         mcg_results["text"] = mcg_values
-        mcg_results.pack(padx=30, side=LEFT)
+        mcg_results.grid(row=4, column=0,columnspan=2)
         chen_results["text"] = chen_values
-        chen_results.pack(padx=30, side=LEFT)
+        chen_results.grid(row=4, column=2,columnspan=2)
     elif mode == "c":
         chen_results["text"] = chen_values
-        chen_results.pack(padx=30,side=TOP)
-        mcg_results.pack_forget()
+        chen_results.grid(row=4,columnspan=3,column=0, sticky=W+E+N+S)
+        mcg_results.grid_forget()
     elif mode == "m":
         mcg_results["text"] = mcg_values
-        mcg_results.pack(padx=30, side=TOP)
-        chen_results.pack_forget()
+        mcg_results.grid(row=4,columnspan=3,column=0, sticky=W+E+N+S)
+        chen_results.grid_forget()
 
 def popuperror(msg):
     popup = Tk()
+    popup.iconbitmap("logo.ico")
     popup.geometry("430x100")
+    popup.resizable(False, False)
     popup["bg"] = "white"
     popup.wm_title("Error")
     label = Label(popup, text=msg, font="Roboto", bg="white")
     label.pack(side="top", fill="x", pady=10)
-    B1 = Button(popup, text="Okay", command=popup.destroy, bg="#dcdcdc", borderwidth=0)
+    B1 = Button(popup, text="Exit", command=popup.destroy, bg="#2c3e50", fg="white", padx=10, borderwidth=0)
     B1.pack()
     popup.mainloop()
 
 # GUI
 root = Tk()
 root.title("Values")
-root.geometry("350x500")
-
+root.geometry("500x500")
+root.iconbitmap("logo.ico")
+frame = Frame(root)
+frame.pack()
 radio_switch = StringVar(None, "cm")
 root["bg"] = "white"
-Label(root, text="Enter Atomic Number:", font=("Roboto", 15), bg="white").pack(pady=7, anchor=W, padx=30)
-element = Entry(root, justify=CENTER, bg="#dcdcdc", borderwidth=0, font=("Roboto", 13))
-element.pack(fill=X, padx=30, anchor=W)
-Radiobutton(root, text="Chen Values", padx=30, variable=radio_switch, value="c", bg="white").pack(anchor=W)
-Radiobutton(root, text="McGuire Values", padx=30, variable=radio_switch, value="m", bg="white").pack(anchor=W)
-Radiobutton(root, text="Both Chen and McGuire Values", padx=30, variable=radio_switch, value="cm", bg="white").pack(anchor=W)
-mcg_results = Label(root, text="", font=("Roboto", 13), bg="white")
-chen_results = Label(root, text="", font=("Roboto", 13), bg="white")
+frame["bg"] = "white"
+Label(frame, text="Enter Atomic Number:", font=("Roboto", 15), bg="white", pady=5).grid(row=0,columnspan=3,column=0, sticky=W+E+N+S)
+element = Entry(frame, justify=CENTER, bg="#e4e8e8", borderwidth=0, font=("Roboto", 13))
+element.grid(row=1,columnspan=3,column=0, sticky=W+E+N+S)
+Radiobutton(frame, text="Chen Values", variable=radio_switch, value="c", bg="white", padx=1, pady=5).grid(row=2,column=0)
+Radiobutton(frame, text="McGuire Values", variable=radio_switch, value="m", bg="white").grid(row=2, column=1)
+Radiobutton(frame, text="Both Chen and McGuire Values", variable=radio_switch, value="cm", bg="white").grid(row=2, column=2)
+mcg_results = Label(frame, text="", font=("Roboto", 13), bg="white",pady=10)
+chen_results = Label(frame, text="", font=("Roboto", 13), bg="white",pady=10)
 element.bind("<Return>", computation)
-Button(root, text="Generate", command=computation, bg="#dcdcdc", borderwidth=0).pack(anchor=W, padx=30, pady=5)
+Button(frame, text="Generate", command=computation, bg="#2c3e50", fg="white" , padx=10, borderwidth=0).grid(row=3,columnspan=3,column=0)
 root.mainloop()
