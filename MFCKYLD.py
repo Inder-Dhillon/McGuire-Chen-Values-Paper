@@ -42,7 +42,8 @@ def computation(event=True):
             return
         for i in range(-2, 3):
             toggle_mcg["a" + str(i)] = toggle_mcg["a" + str(i)] * (z ** i)
-        mcg_values = "McGuire Values\n" + np.exp(toggle_mcg.sum(axis=1)).round(5).to_string()
+
+        mcg_values = "McGuire Values\n" + np.exp(toggle_mcg.sum(axis=1)).round(5).to_string().replace("1.0000", "N/A      ")
 
     if mode == "c" or mode == "cm":
         if 67 <= z <= 69:
@@ -60,7 +61,7 @@ def computation(event=True):
             return
         for i in range(-2, 3):
             toggle_chen["a" + str(i)] = toggle_chen["a" + str(i)] * (z ** i)
-        chen_values = "Chen Values\n" + np.exp(toggle_chen.sum(axis=1)).round(5).to_string()
+        chen_values = "Chen Values\n" + np.exp(toggle_chen.sum(axis=1)).round(5).to_string().replace("1.00000", "N/A      ")
 
     if mode == "cm":
         mcg_results["text"] = mcg_values
@@ -123,7 +124,7 @@ def exportcsv(event=True):
                 return
             for i in range(-2, 3):
                 toggle_mcg["a" + str(i)] = toggle_mcg["a" + str(i)] * (z ** i)
-            exp_df[str(z)] = (np.exp(toggle_mcg.sum(axis=1)).round(5))
+            exp_df[str(z)] = (np.exp(toggle_mcg.sum(axis=1)).round(5)).replace(1.0, "N/A")
         if mode == "c" or mode == "cm":
             if 67 <= z <= 69:
                 toggle_chen = chen_67_to_69.copy()
@@ -140,7 +141,7 @@ def exportcsv(event=True):
                 return
             for i in range(-2, 3):
                 toggle_chen["a" + str(i)] = toggle_chen["a" + str(i)] * (z ** i)
-            exp_df[str(z)] = np.exp(toggle_chen.sum(axis=1)).round(5)
+            exp_df[str(z)] = np.exp(toggle_chen.sum(axis=1)).round(5).replace(1.0, "N/A")
     export_file_path = filedialog.asksaveasfilename(defaultextension='.csv')
     exp_df.to_csv(export_file_path, index=True, header=True)
     popuperror(msg="Values Exported", kind="Exported")
