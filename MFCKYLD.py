@@ -43,7 +43,7 @@ def computation(event=True):
         for i in range(-2, 3):
             toggle_mcg["a" + str(i)] = toggle_mcg["a" + str(i)] * (z ** i)
 
-        mcg_values = "McGuire Values\n" + np.exp(toggle_mcg.sum(axis=1)).round(5).to_string().replace("1.0000", "N/A      ")
+        mcg_values = "McGuire Values\n" + np.exp(toggle_mcg.sum(axis=1)).round(5).to_string().replace("1.00000", "N/A      ")
 
     if mode == "c" or mode == "cm":
         if 67 <= z <= 69:
