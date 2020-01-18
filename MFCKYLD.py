@@ -85,7 +85,7 @@ def popuperror(msg, kind="Error"):
     popup.resizable(False, False)
     popup["bg"] = "white"
     popup.wm_title(kind)
-    label = Label(popup, text=msg, font="Arial", bg="white")
+    label = Label(popup, text=msg, font=("Arial", 12), bg="white")
     label.pack(side="top", fill="x", pady=10)
     B1 = Button(popup, text="Exit", command=popup.destroy, bg="#2c3e50", fg="white", padx=10, borderwidth=0)
     B1.pack()
